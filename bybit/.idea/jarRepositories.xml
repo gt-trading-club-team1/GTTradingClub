@@ -36,5 +36,15 @@
       <option name="name" value="maven4" />
       <option name="url" value="https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven5" />
+      <option name="name" value="maven5" />
+      <option name="url" value="https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven5" />
+      <option name="name" value="maven5" />
+      <option name="url" value="https://mvnrepository.com/artifact/jakarta.websocket/jakarta.websocket-api" />
+    </remote-repository>
   </component>
 </project>

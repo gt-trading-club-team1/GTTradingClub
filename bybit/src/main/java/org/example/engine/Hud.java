@@ -4,14 +4,11 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.example.bybithandler.ByBitClient;
 import org.example.orderbook.OrderBook;
 import org.springframework.web.socket.TextMessage;
@@ -21,11 +18,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CountDownLatch;
 
-public class Hud2 extends Application {
+public class Hud extends Application {
     static TableView<OrderDisplay> orderbookHUD = new TableView<>();
     static HashMap<String, OrderBook> orderbooks = new HashMap<String, OrderBook>();
 
     static ObservableList<OrderDisplay> hudOrderbookData = FXCollections.observableArrayList();
+    /*
     public static void main(String[] args) {
         UpdateOrderbook runnable = new UpdateOrderbook();
         Thread thread = new Thread(runnable);
@@ -33,7 +31,7 @@ public class Hud2 extends Application {
 
         launch(args);
     }
-
+     */
     @Override
     public void start(Stage primaryStage) {
         // Create columns for the table
@@ -103,15 +101,12 @@ public class Hud2 extends Application {
             if (row >= 20) break;
         }
     }
-
+    /*
     public static class UpdateOrderbook implements Runnable {
         public void run() {
             // Create barrier and set countdown counter to 0
             CountDownLatch doneSignal = new CountDownLatch(1);
             Runtime.getRuntime().addShutdownHook(new Thread() {
-                /**
-                 * Callback for Control-c
-                 */
                 @Override
                 public void run() {
                     // Unlock the latch with main thread awaiting for it, will continue and do the clean up
@@ -153,4 +148,5 @@ public class Hud2 extends Application {
             System.out.println("Exiting.");
         }
     }
+    */
 }
