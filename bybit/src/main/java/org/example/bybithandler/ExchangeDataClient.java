@@ -5,10 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.*;
 import lombok.SneakyThrows;
 import org.example.orderbook.OrderBook;
-
-import java.net.URI;
-import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.concurrent.CountDownLatch;
 
 @ClientEndpoint
@@ -19,6 +15,7 @@ public abstract class ExchangeDataClient {
     protected String security;
     protected String exchange;
     protected OrderBook orderbook;
+    long latestSequenceNumber;
 
     public ExchangeDataClient(OrderBook orderbook, String security, String exchange) {
         this.orderbook = orderbook;
@@ -35,6 +32,7 @@ public abstract class ExchangeDataClient {
     @SneakyThrows
     public void onMessage(Session session, String message) {
         this.session = session;
+        System.out.println("Message: " + message);
         try {
             updateOrderbook(jsonMapper.readTree(message));
             System.out.println(orderbook.bids);

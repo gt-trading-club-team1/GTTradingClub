@@ -2,6 +2,7 @@ package org.example.bybithandler;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.websocket.ClientEndpoint;
+import org.example.orderbook.Order;
 import org.example.orderbook.OrderBook;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -16,22 +17,30 @@ public class ByBitClient extends ExchangeDataClient {
 
     @Override
     protected void updateOrderbook(JsonNode message) {
+        long blockTimestamp = jsonMapper.convertValue(message.get("ts"), Long.class);
         parseMessage(message);
         if (success) {
-            TreeMap<Double, Double> bids = orderbook.bids, asks = orderbook.asks;
+            TreeMap<Double, Order> bids = orderbook.bids, asks = orderbook.asks;
             if (jsonMapper.convertValue(message.get("type"), String.class).equals("snapshot")) {
                 bids.clear();
                 asks.clear();
             }
             for (List order : apiBids) {
-                if (Double.parseDouble((String) order.get(1)) == 0)
-                    bids.remove(Double.parseDouble((String) order.get(0)));
-                bids.put(Double.parseDouble((String) order.get(0)), Double.parseDouble((String) order.get(1)));
+                Double volume = Double.parseDouble((String) order.get(1));
+                Double price = Double.parseDouble((String) order.get(0));
+                if (volume == 0)
+                    bids.remove(price);
+                else {
+                    if (bids.get(price) == null || bids.get(price).timestamp < blockTimestamp) bids.put(price, new Order(volume, blockTimestamp));
+                }
             }
             for (List order : apiAsks) {
-                if (Double.parseDouble((String) order.get(1)) == 0)
+                Double volume = Double.parseDouble((String) order.get(1));
+                if (volume == 0)
                     asks.remove(Double.parseDouble((String) order.get(0)));
-                asks.put(Double.parseDouble((String) order.get(0)), Double.parseDouble((String) order.get(1)));
+                else {
+                    asks.put(Double.parseDouble((String) order.get(0)), new Order(volume, blockTimestamp));
+                }
             }
             success = false;
         }

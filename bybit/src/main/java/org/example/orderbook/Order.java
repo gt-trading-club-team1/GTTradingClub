@@ -1,10 +1,15 @@
 package org.example.orderbook;
 
 public class Order {
-    public double price;
-    public double shares;
-    Order(double price, double shares) {
-        this.price = price;
-        this.shares = shares;
+    public double volume;
+    public long timestamp;
+    public Order(double volume, long timestamp) {
+        this.volume = volume;
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return volume + "/" + timestamp;
     }
 }

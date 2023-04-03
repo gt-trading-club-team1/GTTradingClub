@@ -3,7 +3,7 @@ package org.example.orderbook;
 import java.util.*;
 
 public class OrderBook {
-    public TreeMap<Double, Double> bids, asks;
+    public TreeMap<Double, Order> bids, asks;
     // No longer needed
     double[] askPrices;
     double[] bidPrices;
@@ -11,11 +11,11 @@ public class OrderBook {
     SegmentTree bidSegment;
 
     public OrderBook() {
-        this.bids = new TreeMap<Double, Double>(Collections.reverseOrder());
-        this.asks = new TreeMap<Double, Double>();
+        this.bids = new TreeMap<Double, Order>(Collections.reverseOrder());
+        this.asks = new TreeMap<Double, Order>();
     }
 
-    public OrderBook(TreeMap<Double, Double> bids, TreeMap<Double, Double> asks) {
+    public OrderBook(TreeMap<Double, Order> bids, TreeMap<Double, Order> asks) {
         this.bids = bids;
         this.asks = asks;
     }
